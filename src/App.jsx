@@ -32,7 +32,7 @@ function App() {
           );
         })
       ) : (
-        <p className="color-card">No colors.. start by adding one!</p>
+        <p>No colors.. start by adding one!</p>
       )}
     </>
   );
