@@ -4,7 +4,7 @@ import "./Color.css";
 export default function Color({ color, onDelete }) {
   const [showReallyDelete, setShowReallyDelete] = useState(false);
 
-  function handleDelete() {
+  function handleShowDelete() {
     if (showReallyDelete) {
       onDelete();
     } else {
@@ -39,7 +39,7 @@ export default function Color({ color, onDelete }) {
           </button>
         </div>
       ) : (
-        <button onClick={handleDelete} type="button">
+        <button onClick={handleShowDelete} type="button">
           DELETE
         </button>
       )}

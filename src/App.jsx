@@ -5,14 +5,14 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [newColors, setNewColors] = useState([]);
+  const [newColors, setNewColors] = useState(initialColors);
 
   function handleNewColor(color) {
     setNewColors([color, ...newColors]);
   }
 
-  function handleDelete() {
-    setNewColors(newColors.filter);
+  function handleDelete(index) {
+    setNewColors(newColors.filter((_, i) => i !== index));
   }
   // HIER WEITER MACHEN
 
@@ -20,11 +20,14 @@ function App() {
     <>
       <h1>Theme Creator</h1>
       <ColorForm onSubmitForm={handleNewColor} />
-      {newColors.map((color) => {
-        return <Color key={color.id} color={color} onDelete={handleDelete} />;
-      })}
-      {initialColors.map((color) => {
-        return <Color key={color.id} color={color} onDelete={handleDelete} />;
+      {newColors.map((color, index) => {
+        return (
+          <Color
+            key={color.id}
+            color={color}
+            onDelete={() => handleDelete(index)}
+          />
+        );
       })}
     </>
   );
