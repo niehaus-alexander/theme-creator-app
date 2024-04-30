@@ -1,27 +1,38 @@
 import ColorInput from "../ColorInput/ColorInput";
 import "./ColorForm.css";
+import { nanoid } from "nanoid";
 
-export default function ColorForm() {
+export default function ColorForm({ onSubmitForm }) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    console.log(data);
+
+    const id = nanoid();
+    const dataWithID = { ...data, id: id };
+
+    console.log(dataWithID);
+    onSubmitForm(dataWithID);
   }
 
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <label htmlFor="name">Role</label>
+      <label htmlFor="role">Role</label>
       <br />
-      <input type="text" name="role" id="role"></input>
+      <input
+        type="text"
+        name="role"
+        id="role"
+        defaultValue="some color"
+      ></input>
       <br />
-      <label htmlFor="color">Hex</label>
+      <label htmlFor="hex">Hex</label>
       <br />
-      <ColorInput id="color" defaultValue="#123456" />
+      <ColorInput id="hex" defaultValue="#123456" />
       <br />
-      <label htmlFor="contrast">Contrast Text</label>
+      <label htmlFor="contrastText">Contrast Text</label>
       <br />
-      <ColorInput id="contrast" defaultValue="#123456" />
+      <ColorInput id="contrastText" defaultValue="#123456" />
       <br />
       <br />
       <button type="submit">ADD COLOR</button>
