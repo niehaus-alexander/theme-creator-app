@@ -20,15 +20,20 @@ function App() {
     <>
       <h1>Theme Creator</h1>
       <ColorForm onSubmitForm={handleNewColor} />
-      {newColors.map((color, index) => {
-        return (
-          <Color
-            key={color.id}
-            color={color}
-            onDelete={() => handleDelete(index)}
-          />
-        );
-      })}
+
+      {newColors.length >= 1 ? (
+        newColors.map((color, index) => {
+          return (
+            <Color
+              key={color.id}
+              color={color}
+              onDelete={() => handleDelete(index)}
+            />
+          );
+        })
+      ) : (
+        <p>No colors.. start by adding one!</p>
+      )}
     </>
   );
 }
