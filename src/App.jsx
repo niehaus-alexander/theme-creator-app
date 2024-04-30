@@ -5,22 +5,35 @@ import "./App.css";
 import { useState } from "react";
 
 function App() {
-  const [newColors, setNewColors] = useState([]);
+  const [newColors, setNewColors] = useState(initialColors);
 
   function handleNewColor(color) {
     setNewColors([color, ...newColors]);
   }
 
+  function handleDelete(index) {
+    setNewColors(newColors.filter((_, i) => i !== index));
+  }
+  // HIER WEITER MACHEN
+
   return (
     <>
       <h1>Theme Creator</h1>
       <ColorForm onSubmitForm={handleNewColor} />
-      {newColors.map((color) => {
-        return <Color key={color.id} color={color} />;
-      })}
-      {initialColors.map((color) => {
-        return <Color key={color.id} color={color} />;
-      })}
+
+      {newColors.length >= 1 ? (
+        newColors.map((color, index) => {
+          return (
+            <Color
+              key={color.id}
+              color={color}
+              onDelete={() => handleDelete(index)}
+            />
+          );
+        })
+      ) : (
+        <p className="color-card">No colors.. start by adding one!</p>
+      )}
     </>
   );
 }
