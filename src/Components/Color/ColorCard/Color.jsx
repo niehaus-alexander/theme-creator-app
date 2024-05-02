@@ -3,6 +3,7 @@ import "./Color.css";
 
 export default function Color({ color, onDelete }) {
   const [showReallyDelete, setShowReallyDelete] = useState(false);
+  const [editMode, setEditMode] = useState(false);
 
   function handleShowDelete() {
     if (showReallyDelete) {
@@ -14,6 +15,10 @@ export default function Color({ color, onDelete }) {
 
   function handleCancel() {
     setShowReallyDelete(false);
+  }
+
+  function handleEdit() {
+    setEditMode(true);
   }
 
   return (
@@ -39,9 +44,14 @@ export default function Color({ color, onDelete }) {
           </button>
         </div>
       ) : (
-        <button onClick={handleShowDelete} type="button">
-          DELETE
-        </button>
+        <div>
+          <button onClick={handleShowDelete} type="button">
+            DELETE
+          </button>
+          <button type="button" onClick={handleEdit}>
+            EDIT
+          </button>
+        </div>
       )}
     </div>
   );

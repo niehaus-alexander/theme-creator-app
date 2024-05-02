@@ -14,7 +14,6 @@ function App() {
   function handleDelete(index) {
     setNewColors(newColors.filter((_, i) => i !== index));
   }
-  // HIER WEITER MACHEN
 
   return (
     <>
