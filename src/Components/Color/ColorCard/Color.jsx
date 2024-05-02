@@ -34,22 +34,30 @@ export default function Color({ color, onDelete }) {
       <p>contrast: {color.contrastText}</p>
       {showReallyDelete ? handleShowDelete() : ""}
 
-      <button
-        type="button"
-        onClick={() =>
-          showReallyDelete ? onDelete() : setShowReallyDelete(true)
-        }
-      >
-        DELETE
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setEditMode(true);
-        }}
-      >
-        EDIT
-      </button>
+      {editMode ? (
+        ""
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() =>
+              showReallyDelete ? onDelete() : setShowReallyDelete(true)
+            }
+          >
+            DELETE
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setEditMode(true);
+            }}
+          >
+            EDIT
+          </button>
+        </>
+      )}
+
       {editMode ? (
         <ColorForm
           editMode={editMode}

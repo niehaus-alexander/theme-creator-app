@@ -27,6 +27,7 @@ function App() {
               key={color.id}
               color={color}
               onDelete={() => handleDelete(index)}
+              onEditColor
             />
           );
         })
