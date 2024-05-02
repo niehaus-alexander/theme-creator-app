@@ -2,7 +2,12 @@ import ColorInput from "../ColorInput/ColorInput";
 import "./ColorForm.css";
 import { nanoid } from "nanoid";
 
-export default function ColorForm({ onSubmitForm }) {
+export default function ColorForm({
+  onSubmitForm,
+  editMode,
+  color,
+  onCancelEditMode,
+}) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -11,7 +16,10 @@ export default function ColorForm({ onSubmitForm }) {
     const id = nanoid();
     const dataWithID = { ...data, id: id };
 
-    console.log(dataWithID);
+    if (editMode) {
+      dataWithID.id = color.id;
+    }
+
     onSubmitForm(dataWithID);
   }
 
@@ -23,19 +31,31 @@ export default function ColorForm({ onSubmitForm }) {
         type="text"
         name="role"
         id="role"
-        defaultValue="some color"
+        defaultValue={editMode ? color.role : "some color"}
       ></input>
       <br />
       <label htmlFor="hex">Hex</label>
       <br />
-      <ColorInput id="hex" defaultValue="#9ec5e0" />
+      <ColorInput id="hex" defaultValue={editMode ? color.hex : "#9ec5e0"} />
       <br />
       <label htmlFor="contrastText">Contrast Text</label>
       <br />
-      <ColorInput id="contrastText" defaultValue="#ff0000" />
+      <ColorInput
+        id="contrastText"
+        defaultValue={editMode ? color.contrastText : "#ff0000"}
+      />
+      <br />
+      {editMode ? <button type="submit">UPDATE COLOR</button> : ""}
       <br />
       <br />
-      <button type="submit">ADD COLOR</button>
+      {!editMode ? <button type="submit">ADD COLOR</button> : ""}
+      {editMode ? (
+        <button onClick={onCancelEditMode} type="button">
+          CANCEL
+        </button>
+      ) : (
+        ""
+      )}
     </form>
   );
 }
