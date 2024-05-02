@@ -1,24 +1,24 @@
 import { useState } from "react";
 import "./Color.css";
+import ColorForm from "../ColorForm/ColorForm";
 
-export default function Color({ color, onDelete }) {
+export default function Color({ color, onDelete, onEditColor }) {
   const [showReallyDelete, setShowReallyDelete] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   function handleShowDelete() {
-    if (showReallyDelete) {
-      onDelete();
-    } else {
-      setShowReallyDelete(true);
-    }
+    return (
+      <>
+        <h3 className="color-card-highlight">Really delete?</h3>
+        <button type="button" onClick={() => setShowReallyDelete(false)}>
+          CANCEL
+        </button>
+      </>
+    );
   }
 
-  function handleCancel() {
-    setShowReallyDelete(false);
-  }
-
-  function handleEdit() {
-    setEditMode(true);
+  function handleCancelEditMode() {
+    setEditMode(false);
   }
 
   return (
@@ -32,26 +32,41 @@ export default function Color({ color, onDelete }) {
       <h3 className="color-card-highlight">{color.hex}</h3>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
+      {showReallyDelete ? handleShowDelete() : ""}
 
-      {showReallyDelete ? (
-        <div>
-          <p className="color-card-highlight">Really delete?</p>
-          <button onClick={handleCancel} type="button">
-            CANCEL
-          </button>
-          <button onClick={onDelete} type="button">
-            DELETE
-          </button>
-        </div>
+      {editMode ? (
+        ""
       ) : (
-        <div>
-          <button onClick={handleShowDelete} type="button">
+        <>
+          <button
+            type="button"
+            onClick={() =>
+              showReallyDelete ? onDelete() : setShowReallyDelete(true)
+            }
+          >
             DELETE
           </button>
-          <button type="button" onClick={handleEdit}>
+
+          <button
+            type="button"
+            onClick={() => {
+              setEditMode(true);
+            }}
+          >
             EDIT
           </button>
-        </div>
+        </>
+      )}
+
+      {editMode ? (
+        <ColorForm
+          onEditColor={onEditColor}
+          editMode={editMode}
+          color={color}
+          onCancelEditMode={handleCancelEditMode}
+        />
+      ) : (
+        ""
       )}
     </div>
   );
