@@ -3,6 +3,7 @@ import "./ColorForm.css";
 import { nanoid } from "nanoid";
 
 export default function ColorForm({
+  onEditColor,
   onSubmitForm,
   editMode,
   color,
@@ -18,9 +19,10 @@ export default function ColorForm({
 
     if (editMode) {
       dataWithID.id = color.id;
+      onEditColor(dataWithID);
+    } else {
+      onSubmitForm(dataWithID);
     }
-
-    onSubmitForm(dataWithID);
   }
 
   return (
