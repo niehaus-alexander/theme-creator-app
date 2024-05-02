@@ -18,8 +18,11 @@ function App() {
   function handleEditColor(editedColor) {
     setNewColors(
       newColors.map((color) => {
-        if (color.id === editedColor.id) return editedColor;
-        return color;
+        if (color.id === editedColor.id) {
+          return editedColor;
+        } else {
+          return color;
+        }
       })
     );
   }
