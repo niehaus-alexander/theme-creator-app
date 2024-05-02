@@ -1,10 +1,33 @@
 import { useState } from "react";
 import "./Color.css";
 import ColorForm from "../ColorForm/ColorForm";
+import { useEffect } from "react";
 
 export default function Color({ color, onDelete, onEditColor }) {
   const [showReallyDelete, setShowReallyDelete] = useState(false);
   const [editMode, setEditMode] = useState(false);
+  const [copyMode, setCopyMode] = useState(false);
+
+  useEffect(() => {
+    let timeoutId;
+    if (copyMode) {
+      timeoutId = setTimeout(() => {
+        setCopyMode(false);
+      }, 3000);
+    }
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [copyMode]);
+
+  async function handleCopyButton(text) {
+    try {
+      setCopyMode(true);
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
   function handleShowDelete() {
     return (
@@ -30,6 +53,13 @@ export default function Color({ color, onDelete, onEditColor }) {
       }}
     >
       <h3 className="color-card-highlight">{color.hex}</h3>
+      <button
+        onClick={() => {
+          handleCopyButton(color.hex);
+        }}
+      >
+        {copyMode ? "SUCCESFULLY COPIED!" : "COPY"}
+      </button>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
       {showReallyDelete ? handleShowDelete() : ""}
