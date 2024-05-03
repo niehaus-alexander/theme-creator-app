@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function ContrastChecker({ color }) {
-  const [constrastRating, setContrastRating] = useState();
+  const [contrastRating, setContrastRating] = useState();
 
   useEffect(() => {
     async function fetchContrast() {
@@ -17,14 +17,34 @@ export default function ContrastChecker({ color }) {
       );
       const data = await response.json();
       setContrastRating(data.overall);
-      console.log(data);
+      console.log(data.overall);
     }
     fetchContrast();
   });
 
-  if (!constrastRating) {
+  if (!contrastRating) {
     return <>loading data...</>;
   }
 
-  return <p>Overall Contrast Score: </p>;
+  function handleBackground() {
+    if (contrastRating === "Yup") {
+      return "green";
+    } else if (contrastRating === "Nope") {
+      return "red";
+    } else {
+      return "orange";
+    }
+  }
+
+  return (
+    <p
+      style={{
+        color: "black",
+        backgroundColor: handleBackground(),
+        display: "inline-flex",
+      }}
+    >
+      Overall Contrast Score: {contrastRating}
+    </p>
+  );
 }
