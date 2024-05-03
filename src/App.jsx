@@ -3,11 +3,15 @@ import Color from "./Components/Color/ColorCard/Color";
 import ColorForm from "./Components/Color/ColorForm/ColorForm";
 import "./App.css";
 import useLocalStorageState from "use-local-storage-state";
+import ThemesForm from "./Components/Color/ThemesForm/ThemesForm";
+import { initThemes } from "./lib/initThemes";
+import { useState } from "react";
 
 function App() {
   const [newColors, setNewColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
   });
+  const [themes, setThemes] = useState(initThemes);
 
   function handleNewColor(color) {
     setNewColors([color, ...newColors]);
@@ -32,6 +36,7 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
+      <ThemesForm themes={themes} />
       <ColorForm onSubmitForm={handleNewColor} />
 
       {newColors.length > 0 ? (

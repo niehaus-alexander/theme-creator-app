@@ -1,26 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function ContrastChecker({ color }) {
   const [contrastRating, setContrastRating] = useState();
 
-  useEffect(() => {
-    async function fetchContrast() {
-      const response = await fetch(
-        "https://www.aremycolorsaccessible.com/api/are-they",
-        {
-          mode: "cors",
-          method: "POST",
-          body: JSON.stringify({
-            colors: [color.hex, color.contrastText],
-          }),
-        }
-      );
-      const data = await response.json();
-      setContrastRating(data.overall);
-      console.log(data.overall);
-    }
-    fetchContrast();
-  });
+  async function fetchContrast() {
+    const response = await fetch(
+      "https://www.aremycolorsaccessible.com/api/are-they",
+      {
+        mode: "cors",
+        method: "POST",
+        body: JSON.stringify({
+          colors: [color.hex, color.contrastText],
+        }),
+      }
+    );
+    const data = await response.json();
+    setContrastRating(data.overall);
+    console.log(data.overall);
+  }
+  fetchContrast();
 
   if (!contrastRating) {
     return <>loading data...</>;
