@@ -11,7 +11,14 @@ function App() {
   const [newColors, setNewColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
   });
+
   const [themes, setThemes] = useState(initThemes);
+  const [currentTheme, setCurrentTheme] = useState(initThemes[0]);
+
+  function handleCurrentTheme(theme) {
+    setCurrentTheme(theme);
+    console.log(currentTheme);
+  }
 
   function handleNewColor(color) {
     setNewColors([color, ...newColors]);
@@ -36,7 +43,7 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <ThemesForm themes={themes} />
+      <ThemesForm themes={themes} onCurrentTheme={handleCurrentTheme} />
       <ColorForm onSubmitForm={handleNewColor} />
 
       {newColors.length > 0 ? (

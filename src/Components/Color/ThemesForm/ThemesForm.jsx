@@ -1,14 +1,18 @@
-import { useState } from "react";
-import { initThemes } from "../../../lib/initThemes";
-
-export default function ThemesForm({ themes }) {
-  const [editThemeMode, setEditThemeMode] = useState();
-
+export default function ThemesForm({ themes, onCurrentTheme }) {
   return (
     <div>
       <select>
         {themes.map((theme) => {
-          return <option key={theme.id}>{theme.name}</option>;
+          return (
+            <option
+              onClick={() => {
+                onCurrentTheme(theme.name);
+              }}
+              key={theme.id}
+            >
+              {theme.name}
+            </option>
+          );
         })}
       </select>
       <button type="button">ADD</button>
