@@ -13,11 +13,22 @@ function App() {
   });
 
   const [themes, setThemes] = useState(initThemes);
-  const [currentTheme, setCurrentTheme] = useState(initThemes[0]);
+  const [currentTheme, setCurrentTheme] = useState(initThemes[0].id);
+
+  function handleMapColorsOfTheme(themeId) {
+    const theme = themes.find((theme) => theme.id === themeId);
+    const themeColors = theme.colors.map((colorID) => {
+      const color = newColors.find((color) => color.id === colorID);
+      return color;
+    });
+    console.log(theme);
+    return themeColors;
+  }
+  const colorsOfTheme = handleMapColorsOfTheme(currentTheme);
+  console.log(colorsOfTheme);
 
   function handleCurrentTheme(theme) {
     setCurrentTheme(theme);
-    console.log(currentTheme);
   }
 
   function handleNewColor(color) {
@@ -43,7 +54,11 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
-      <ThemesForm themes={themes} onCurrentTheme={handleCurrentTheme} />
+      <ThemesForm
+        themes={themes}
+        onMapColors={handleMapColorsOfTheme}
+        onCurrentTheme={handleCurrentTheme}
+      />
       <ColorForm onSubmitForm={handleNewColor} />
 
       {newColors.length > 0 ? (

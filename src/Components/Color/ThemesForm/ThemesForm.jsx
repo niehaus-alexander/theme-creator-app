@@ -1,4 +1,4 @@
-export default function ThemesForm({ themes, onCurrentTheme }) {
+export default function ThemesForm({ themes, onCurrentTheme, onMapColors }) {
   return (
     <div>
       <select>
@@ -6,7 +6,8 @@ export default function ThemesForm({ themes, onCurrentTheme }) {
           return (
             <option
               onClick={() => {
-                onCurrentTheme(theme.name);
+                onCurrentTheme(theme.id);
+                onMapColors(theme.id);
               }}
               key={theme.id}
             >
