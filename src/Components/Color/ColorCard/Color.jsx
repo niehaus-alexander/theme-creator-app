@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Color.css";
 import ColorForm from "../ColorForm/ColorForm";
-
+import ContrastChecker from "../ContrastChecker/ContrastChecker";
 import CopyButton from "../Buttons/CopyButton";
 
 export default function Color({ color, onDelete, onEditColor }) {
@@ -35,6 +35,8 @@ export default function Color({ color, onDelete, onEditColor }) {
       <CopyButton color={color} />
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
+      <ContrastChecker color={color} />
+      <br />
       {showReallyDelete ? handleShowDelete() : ""}
 
       {editMode ? (
