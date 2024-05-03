@@ -20,7 +20,7 @@ export default function ContrastChecker({ color }) {
       console.log(data.overall);
     }
     fetchContrast();
-  });
+  }, [color.hex, color.contrastText]);
 
   if (!contrastRating) {
     return <>loading data...</>;
