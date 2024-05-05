@@ -17,7 +17,6 @@ export default function ContrastChecker({ color }) {
       );
       const data = await response.json();
       setContrastRating(data.overall);
-      console.log(data.overall);
     }
     fetchContrast();
   }, [color.hex, color.contrastText]);
