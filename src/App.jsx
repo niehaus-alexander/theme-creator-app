@@ -43,8 +43,8 @@ function App() {
     setThemes(updatedThemes);
   }
 
-  function handleDelete(index) {
-    setNewColors(newColors.filter((_, i) => i !== index));
+  function handleDelete(id) {
+    setNewColors(newColors.filter((color) => color.id !== id));
   }
 
   function handleEditColor(editedColor) {
@@ -70,12 +70,12 @@ function App() {
       <ColorForm onSubmitForm={handleNewColor} />
 
       {colorsOfTheme.length > 0 ? (
-        colorsOfTheme.map((color, index) => {
+        colorsOfTheme.map((color) => {
           return (
             <Color
               key={color.id}
               color={color}
-              onDelete={() => handleDelete(index)}
+              onDelete={handleDelete}
               onEditColor={handleEditColor}
             />
           );
