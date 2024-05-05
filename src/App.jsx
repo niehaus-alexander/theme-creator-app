@@ -11,8 +11,12 @@ function App() {
   const [newColors, setNewColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
   });
-  const [themes, setThemes] = useState(initThemes);
-  const [currentTheme, setCurrentTheme] = useState(initThemes[0].id);
+  const [themes, setThemes] = useLocalStorageState("themes", {
+    defaultValue: initThemes,
+  });
+  const [currentTheme, setCurrentTheme] = useLocalStorageState("currentTheme", {
+    defaultValue: initThemes[0].id,
+  });
 
   function handleMapColorsOfTheme(themeId) {
     const theme = themes.find((theme) => theme.id === themeId);
@@ -45,6 +49,17 @@ function App() {
 
   function handleDelete(id) {
     setNewColors(newColors.filter((color) => color.id !== id));
+    setThemes((prevThemes) => {
+      return prevThemes.map((theme) => {
+        if (theme.id === currentTheme) {
+          return {
+            ...theme,
+            colors: theme.colors.filter((color) => color !== id),
+          };
+        }
+        return theme;
+      });
+    });
   }
 
   function handleEditColor(editedColor) {
