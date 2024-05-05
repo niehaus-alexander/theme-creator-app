@@ -11,7 +11,6 @@ function App() {
   const [newColors, setNewColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
   });
-
   const [themes, setThemes] = useState(initThemes);
   const [currentTheme, setCurrentTheme] = useState(initThemes[0].id);
 
@@ -21,7 +20,6 @@ function App() {
       const color = newColors.find((color) => color.id === colorID);
       return color;
     });
-    console.log(theme);
     return themeColors;
   }
   const colorsOfTheme = handleMapColorsOfTheme(currentTheme);
@@ -33,6 +31,16 @@ function App() {
 
   function handleNewColor(color) {
     setNewColors([color, ...newColors]);
+    const updatedThemes = themes.map((theme) => {
+      if (theme.id === currentTheme) {
+        return {
+          ...theme,
+          colors: [color.id, ...theme.colors],
+        };
+      }
+      return theme;
+    });
+    setThemes(updatedThemes);
   }
 
   function handleDelete(index) {
@@ -61,8 +69,8 @@ function App() {
       />
       <ColorForm onSubmitForm={handleNewColor} />
 
-      {newColors.length > 0 ? (
-        newColors.map((color, index) => {
+      {colorsOfTheme.length > 0 ? (
+        colorsOfTheme.map((color, index) => {
           return (
             <Color
               key={color.id}
