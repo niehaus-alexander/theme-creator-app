@@ -1,8 +1,24 @@
 import { useState } from "react";
 
-export default function ThemesForm({ themes, onCurrentTheme, onMapColors }) {
+export default function ThemesForm({
+  themes,
+  onCurrentTheme,
+  onMapColors,
+  onAddTheme,
+}) {
   const [themeEditMode, setThemeEditMode] = useState(false);
   const [addMode, setAddMode] = useState(false);
+
+  function handleThemeSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+
+    console.log(data.newTheme);
+    onAddTheme(data.newTheme);
+
+    setAddMode(false);
+  }
 
   return (
     <div>
@@ -35,7 +51,7 @@ export default function ThemesForm({ themes, onCurrentTheme, onMapColors }) {
           <button type="button">DELETE</button>
         </div>
       ) : (
-        <form>
+        <form onSubmit={handleThemeSubmit}>
           <label htmlFor="newTheme">Theme Name:</label>
           <br />
           <input autoFocus type="text" id="newTheme" name="newTheme"></input>

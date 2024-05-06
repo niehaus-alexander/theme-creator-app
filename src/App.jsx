@@ -6,6 +6,7 @@ import useLocalStorageState from "use-local-storage-state";
 import ThemesForm from "./Components/Color/ThemesForm/ThemesForm";
 import { initThemes } from "./lib/initThemes";
 import { useState } from "react";
+import { nanoid } from "nanoid";
 
 function App() {
   const [newColors, setNewColors] = useLocalStorageState("colors", {
@@ -30,6 +31,17 @@ function App() {
 
   function handleCurrentTheme(theme) {
     setCurrentTheme(theme);
+  }
+
+  function handleAddTheme(themeName) {
+    const id = nanoid();
+    const newTheme = {
+      id: id,
+      name: themeName,
+      colors: [],
+    };
+    setThemes((prevThemes) => [...prevThemes, newTheme]);
+    setCurrentTheme(newTheme.id);
   }
 
   function handleNewColor(color) {
@@ -77,6 +89,7 @@ function App() {
     <>
       <h1>Theme Creator</h1>
       <ThemesForm
+        onAddTheme={handleAddTheme}
         themes={themes}
         onMapColors={handleMapColorsOfTheme}
         onCurrentTheme={handleCurrentTheme}
