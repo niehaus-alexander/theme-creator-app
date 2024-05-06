@@ -27,7 +27,6 @@ function App() {
     return themeColors;
   }
   const colorsOfTheme = handleMapColorsOfTheme(currentTheme);
-  console.log(colorsOfTheme);
 
   function handleCurrentTheme(theme) {
     setCurrentTheme(theme);

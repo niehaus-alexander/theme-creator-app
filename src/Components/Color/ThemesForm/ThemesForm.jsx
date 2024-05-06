@@ -7,7 +7,7 @@ export default function ThemesForm({ themes, onCurrentTheme, onMapColors }) {
   return (
     <div>
       {!addMode ? (
-        <form>
+        <div>
           <select>
             {themes.map((theme) => {
               return (
@@ -33,12 +33,12 @@ export default function ThemesForm({ themes, onCurrentTheme, onMapColors }) {
           </button>
           <button type="button">EDIT</button>
           <button type="button">DELETE</button>
-        </form>
+        </div>
       ) : (
         <form>
           <label htmlFor="newTheme">Theme Name:</label>
           <br />
-          <input type="text" id="newTheme" name="newTheme"></input>
+          <input autoFocus type="text" id="newTheme" name="newTheme"></input>
           <button type="submit">SAVE THEME</button>
           <button
             onClick={() => {
