@@ -3,9 +3,12 @@ import { useState } from "react";
 export default function ThemesForm({
   currentTheme,
   themes,
+  onHandleDeleteTheme,
   onCurrentTheme,
   setCurrentTheme,
   onMapColors,
+  deleteMode,
+  setDeleteMode,
   onAddTheme,
 }) {
   const [themeEditMode, setThemeEditMode] = useState(false);
@@ -31,32 +34,45 @@ export default function ThemesForm({
     <div>
       {!addMode ? (
         <div>
-          <select value={currentTheme} onChange={handleThemeChange}>
-            {themes.map((theme) => {
-              return (
-                <option
-                  onClick={() => {
-                    onCurrentTheme(theme.id);
-                    onMapColors();
-                  }}
-                  key={theme.id}
-                  value={theme.id}
-                >
-                  {theme.name}
-                </option>
-              );
-            })}
-          </select>
+          {deleteMode ? (
+            ""
+          ) : (
+            <select value={currentTheme} onChange={handleThemeChange}>
+              {themes.map((theme) => {
+                return (
+                  <option
+                    onClick={() => {
+                      onCurrentTheme(theme.id);
+                      onMapColors();
+                    }}
+                    key={theme.id}
+                    value={theme.id}
+                  >
+                    {theme.name}
+                  </option>
+                );
+              })}
+            </select>
+          )}
+
           <button
             onClick={() => {
-              setAddMode(true);
+              deleteMode ? setDeleteMode(false) : setAddMode(true);
             }}
             type="button"
           >
-            ADD
+            {deleteMode ? "CANCEL" : "ADD"}
           </button>
-          <button type="button">EDIT</button>
-          <button type="button">DELETE</button>
+          {deleteMode ? "" : <button type="button">EDIT</button>}
+
+          <button
+            onClick={() => {
+              deleteMode ? onHandleDeleteTheme() : setDeleteMode(true);
+            }}
+            type="button"
+          >
+            {deleteMode ? "YES DELETE" : "DELETE"}
+          </button>
         </div>
       ) : (
         <form onSubmit={handleThemeSubmit}>

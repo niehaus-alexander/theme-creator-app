@@ -6,11 +6,13 @@ import useLocalStorageState from "use-local-storage-state";
 import ThemesForm from "./Components/Color/ThemesForm/ThemesForm";
 import { initThemes } from "./lib/initThemes";
 import { nanoid } from "nanoid";
+import { useState } from "react";
 
 function App() {
   const [newColors, setNewColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
   });
+  const [deleteMode, setDeleteMode] = useState(false);
   const [themes, setThemes] = useLocalStorageState("themes", {
     defaultValue: initThemes,
   });
@@ -41,6 +43,14 @@ function App() {
     };
     setThemes((prevThemes) => [...prevThemes, newTheme]);
     setCurrentTheme(newTheme.id);
+  }
+
+  function handleDeleteTheme() {
+    setThemes((prevThemes) =>
+      prevThemes.filter((theme) => theme.id !== currentTheme)
+    );
+    setCurrentTheme("t1");
+    setDeleteMode(false);
   }
 
   function handleNewColor(color) {
@@ -91,9 +101,12 @@ function App() {
         currentTheme={currentTheme}
         setCurrentTheme={setCurrentTheme}
         onAddTheme={handleAddTheme}
+        onHandleDeleteTheme={handleDeleteTheme}
         themes={themes}
         onMapColors={handleMapColorsOfTheme}
         onCurrentTheme={handleCurrentTheme}
+        deleteMode={deleteMode}
+        setDeleteMode={setDeleteMode}
       />
       <ColorForm onSubmitForm={handleNewColor} />
 
