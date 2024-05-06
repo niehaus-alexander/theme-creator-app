@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ThemesSubmit from "../ThemesSubmit/ThemesSubmit";
 
 export default function ThemesForm({
   currentTheme,
@@ -30,10 +31,24 @@ export default function ThemesForm({
     setCurrentTheme(themeID);
   }
 
+  function displayEditMode() {
+    return (
+      <ThemesSubmit
+        onHandleThemeSubmit={handleThemeSubmit}
+        setAddMode={setAddMode}
+        themeEditMode={themeEditMode}
+        currentTheme={currentTheme}
+        themes={themes}
+        setThemeEditMode={setThemeEditMode}
+      />
+    );
+  }
+
   return (
     <div>
       {!addMode ? (
         <div>
+          {themeEditMode ? displayEditMode() : ""}
           {deleteMode ? (
             ""
           ) : (
@@ -63,7 +78,18 @@ export default function ThemesForm({
           >
             {deleteMode ? "CANCEL" : "ADD"}
           </button>
-          {deleteMode ? "" : <button type="button">EDIT</button>}
+          {deleteMode ? (
+            ""
+          ) : (
+            <button
+              onClick={() => {
+                setThemeEditMode(true);
+              }}
+              type="button"
+            >
+              EDIT
+            </button>
+          )}
 
           <button
             onClick={() => {
@@ -75,20 +101,14 @@ export default function ThemesForm({
           </button>
         </div>
       ) : (
-        <form onSubmit={handleThemeSubmit}>
-          <label htmlFor="newTheme">Theme Name:</label>
-          <br />
-          <input autoFocus type="text" id="newTheme" name="newTheme"></input>
-          <button type="submit">SAVE THEME</button>
-          <button
-            onClick={() => {
-              setAddMode(false);
-            }}
-            type="button"
-          >
-            CANCEL
-          </button>
-        </form>
+        <ThemesSubmit
+          onHandleThemeSubmit={handleThemeSubmit}
+          setAddMode={setAddMode}
+          themeEditMode={themeEditMode}
+          currentTheme={currentTheme}
+          themes={themes}
+          setThemeEditMode={setThemeEditMode}
+        />
       )}
     </div>
   );
