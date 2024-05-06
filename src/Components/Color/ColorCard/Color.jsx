@@ -46,7 +46,7 @@ export default function Color({ color, onDelete, onEditColor }) {
           <button
             type="button"
             onClick={() =>
-              showReallyDelete ? onDelete() : setShowReallyDelete(true)
+              showReallyDelete ? onDelete(color.id) : setShowReallyDelete(true)
             }
           >
             DELETE
