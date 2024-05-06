@@ -3,6 +3,7 @@ import "./Color.css";
 import ColorForm from "../ColorForm/ColorForm";
 import ContrastChecker from "../ContrastChecker/ContrastChecker";
 import CopyButton from "../Buttons/CopyButton";
+import CopyCssButton from "../Buttons/CopyCssButton";
 
 export default function Color({ color, onDelete, onEditColor }) {
   const [showReallyDelete, setShowReallyDelete] = useState(false);
@@ -60,6 +61,7 @@ export default function Color({ color, onDelete, onEditColor }) {
           >
             EDIT
           </button>
+          <CopyCssButton color={color} />
         </>
       )}
 
