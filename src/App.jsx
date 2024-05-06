@@ -34,6 +34,16 @@ function App() {
     setCurrentTheme(theme);
   }
 
+  function handleEditTheme(newName) {
+    const updatedThemes = themes.map((theme) => {
+      if (theme.id === currentTheme) {
+        return { ...theme, name: newName };
+      }
+      return theme;
+    });
+    setThemes(updatedThemes);
+  }
+
   function handleAddTheme(themeName) {
     const id = nanoid();
     const newTheme = {
@@ -98,6 +108,7 @@ function App() {
     <>
       <h1>Theme Creator</h1>
       <ThemesForm
+        onEditTheme={handleEditTheme}
         currentTheme={currentTheme}
         setCurrentTheme={setCurrentTheme}
         onAddTheme={handleAddTheme}

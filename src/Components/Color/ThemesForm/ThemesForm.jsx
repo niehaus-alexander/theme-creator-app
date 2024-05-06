@@ -8,6 +8,7 @@ export default function ThemesForm({
   onCurrentTheme,
   setCurrentTheme,
   onMapColors,
+  onEditTheme,
   deleteMode,
   setDeleteMode,
   onAddTheme,
@@ -35,6 +36,7 @@ export default function ThemesForm({
     return (
       <ThemesSubmit
         onHandleThemeSubmit={handleThemeSubmit}
+        onEditTheme={onEditTheme}
         setAddMode={setAddMode}
         themeEditMode={themeEditMode}
         currentTheme={currentTheme}
@@ -106,6 +108,7 @@ export default function ThemesForm({
           ) : (
             <ThemesSubmit
               onHandleThemeSubmit={handleThemeSubmit}
+              onEditTheme={onEditTheme}
               setAddMode={setAddMode}
               themeEditMode={themeEditMode}
               currentTheme={currentTheme}

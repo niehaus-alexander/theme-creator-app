@@ -1,9 +1,8 @@
-import { initThemes } from "../../../lib/initThemes";
-
 export default function ThemesSubmit({
   onHandleThemeSubmit,
   setAddMode,
   setThemeEditMode,
+  onEditTheme,
   themeEditMode,
   currentTheme,
   themes,
@@ -12,8 +11,16 @@ export default function ThemesSubmit({
     const theme = themes.find((theme) => theme.id === currentTheme);
     return theme.name;
   }
+  function handleEditSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    onEditTheme(data.newTheme);
+    console.log(data.newTheme);
+    setThemeEditMode(false);
+  }
   return (
-    <form onSubmit={onHandleThemeSubmit}>
+    <form onSubmit={themeEditMode ? handleEditSubmit : onHandleThemeSubmit}>
       <label htmlFor="newTheme">Theme Name:</label>
       <br />
       <input
