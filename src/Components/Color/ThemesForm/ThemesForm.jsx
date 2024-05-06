@@ -91,6 +91,7 @@ export default function ThemesForm({
                     setThemeEditMode(true);
                   }}
                   type="button"
+                  disabled={currentTheme === "t1"}
                 >
                   EDIT
                 </button>
@@ -101,6 +102,7 @@ export default function ThemesForm({
                   deleteMode ? onHandleDeleteTheme() : setDeleteMode(true);
                 }}
                 type="button"
+                disabled={currentTheme === "t1"}
               >
                 {deleteMode ? "YES DELETE" : "DELETE"}
               </button>
