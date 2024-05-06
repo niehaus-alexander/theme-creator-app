@@ -1,8 +1,10 @@
 import { useState } from "react";
 
 export default function ThemesForm({
+  currentTheme,
   themes,
   onCurrentTheme,
+  setCurrentTheme,
   onMapColors,
   onAddTheme,
 }) {
@@ -20,19 +22,25 @@ export default function ThemesForm({
     setAddMode(false);
   }
 
+  function handleThemeChange(event) {
+    const themeID = event.target.value;
+    setCurrentTheme(themeID);
+  }
+
   return (
     <div>
       {!addMode ? (
         <div>
-          <select>
+          <select value={currentTheme} onChange={handleThemeChange}>
             {themes.map((theme) => {
               return (
                 <option
                   onClick={() => {
                     onCurrentTheme(theme.id);
-                    onMapColors(theme.id);
+                    onMapColors();
                   }}
                   key={theme.id}
+                  value={theme.id}
                 >
                   {theme.name}
                 </option>
