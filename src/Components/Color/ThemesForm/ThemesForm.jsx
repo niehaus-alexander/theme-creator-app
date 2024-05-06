@@ -46,69 +46,74 @@ export default function ThemesForm({
 
   return (
     <div>
-      {!addMode ? (
-        <div>
-          {themeEditMode ? displayEditMode() : ""}
-          {deleteMode ? (
-            ""
-          ) : (
-            <select value={currentTheme} onChange={handleThemeChange}>
-              {themes.map((theme) => {
-                return (
-                  <option
-                    onClick={() => {
-                      onCurrentTheme(theme.id);
-                      onMapColors();
-                    }}
-                    key={theme.id}
-                    value={theme.id}
-                  >
-                    {theme.name}
-                  </option>
-                );
-              })}
-            </select>
-          )}
-
-          <button
-            onClick={() => {
-              deleteMode ? setDeleteMode(false) : setAddMode(true);
-            }}
-            type="button"
-          >
-            {deleteMode ? "CANCEL" : "ADD"}
-          </button>
-          {deleteMode ? (
-            ""
-          ) : (
-            <button
-              onClick={() => {
-                setThemeEditMode(true);
-              }}
-              type="button"
-            >
-              EDIT
-            </button>
-          )}
-
-          <button
-            onClick={() => {
-              deleteMode ? onHandleDeleteTheme() : setDeleteMode(true);
-            }}
-            type="button"
-          >
-            {deleteMode ? "YES DELETE" : "DELETE"}
-          </button>
-        </div>
+      {themeEditMode ? (
+        displayEditMode()
       ) : (
-        <ThemesSubmit
-          onHandleThemeSubmit={handleThemeSubmit}
-          setAddMode={setAddMode}
-          themeEditMode={themeEditMode}
-          currentTheme={currentTheme}
-          themes={themes}
-          setThemeEditMode={setThemeEditMode}
-        />
+        <div>
+          {!addMode ? (
+            <div>
+              {deleteMode ? (
+                ""
+              ) : (
+                <select value={currentTheme} onChange={handleThemeChange}>
+                  {themes.map((theme) => {
+                    return (
+                      <option
+                        onClick={() => {
+                          onCurrentTheme(theme.id);
+                          onMapColors();
+                        }}
+                        key={theme.id}
+                        value={theme.id}
+                      >
+                        {theme.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              )}
+
+              <button
+                onClick={() => {
+                  deleteMode ? setDeleteMode(false) : setAddMode(true);
+                }}
+                type="button"
+              >
+                {deleteMode ? "CANCEL" : "ADD"}
+              </button>
+              {deleteMode ? (
+                ""
+              ) : (
+                <button
+                  onClick={() => {
+                    setThemeEditMode(true);
+                  }}
+                  type="button"
+                >
+                  EDIT
+                </button>
+              )}
+
+              <button
+                onClick={() => {
+                  deleteMode ? onHandleDeleteTheme() : setDeleteMode(true);
+                }}
+                type="button"
+              >
+                {deleteMode ? "YES DELETE" : "DELETE"}
+              </button>
+            </div>
+          ) : (
+            <ThemesSubmit
+              onHandleThemeSubmit={handleThemeSubmit}
+              setAddMode={setAddMode}
+              themeEditMode={themeEditMode}
+              currentTheme={currentTheme}
+              themes={themes}
+              setThemeEditMode={setThemeEditMode}
+            />
+          )}
+        </div>
       )}
     </div>
   );
